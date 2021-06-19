@@ -1,4 +1,4 @@
-package com.AssetArrange.CryptoAggregator.Model;
+package com.AssetArrange.CryptoAggregator.Proxy;
 
 import com.AssetArrange.CryptoAggregator.Core.Signature;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -24,9 +24,9 @@ import static java.util.Collections.emptyList;
  * This class acts as a central point for providing user configuration and making GET/POST/PUT requests as well as
  * getting responses as Lists of objects rather than arrays.
  */
-public class CoinbaseExchangeImpl implements CoinbaseExchange {
+public class CoinbaseProxy implements ICoinbaseProxy {
 
-    static final Logger log = LoggerFactory.getLogger(CoinbaseExchangeImpl.class.getName());
+    static final Logger log = LoggerFactory.getLogger(CoinbaseProxy.class.getName());
 
     private final String publicKey;
     private final String passphrase;
@@ -35,7 +35,7 @@ public class CoinbaseExchangeImpl implements CoinbaseExchange {
     private final ObjectMapper objectMapper;
     private final RestTemplate restTemplate;
 
-    public CoinbaseExchangeImpl(final String publicKey,
+    public CoinbaseProxy(final String publicKey,
                                 final String passphrase,
                                 final String baseUrl,
                                 final Signature signature,
@@ -135,7 +135,7 @@ public class CoinbaseExchangeImpl implements CoinbaseExchange {
 
         headers.add("accept", "application/json");
         headers.add("content-type", "application/json");
-        headers.add("User-Agent", "gdax-java unofficial coinbase pro api library");
+        headers.add("User-Agent", "theeKevoBot");
         headers.add("CB-ACCESS-KEY", publicKey);
         headers.add("CB-ACCESS-SIGN", signature.generate(resource, method, jsonBody, timestamp));
         headers.add("CB-ACCESS-TIMESTAMP", timestamp);
@@ -147,20 +147,18 @@ public class CoinbaseExchangeImpl implements CoinbaseExchange {
     }
 
     /**
-     * Purely here for logging an equivalent curl request for debugging
-     * note that the signature is time-sensitive and has a time to live of about 1 minute after which the request
-     * is no longer valid.
+     * Purely here for logging an equivalent curl request for debugging (Signature expires in 1 minute)
      */
     private void curlRequest(String method, String jsonBody, HttpHeaders headers, String resource) {
-        String curlTest = "curl ";
-        for (String key : headers.keySet()){
-            curlTest +=  "-H '" + key + ":" + headers.get(key).get(0) + "' ";
-        }
-        if (jsonBody!=null && !jsonBody.equals(""))
-            curlTest += "-d '" + jsonBody + "' ";
+        StringBuilder builder = new StringBuilder();
+        builder.append("curl ");
+        builder.append(headers.keySet().stream()
+                .map(key -> "-H '" + key + ":" + headers.get(key).get(0) + "' "));
+        if (jsonBody != null && !jsonBody.equals(""))
+            builder.append("-d '").append(jsonBody).append("' ");
+        builder.append("-X ").append(method).append(" ").append(getBaseUrl()).append(resource);
 
-        curlTest += "-X " + method + " " + getBaseUrl() + resource;
-        log.debug(curlTest);
+        log.debug(builder.toString());
     }
 
     private String toJson(Object object) {

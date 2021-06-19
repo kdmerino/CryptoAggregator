@@ -1,11 +1,11 @@
-package com.AssetArrange.CryptoAggregator.Model;
+package com.AssetArrange.CryptoAggregator.Proxy;
 
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 
 import java.util.List;
 
-public interface CoinbaseExchange {
+public interface ICoinbaseProxy {
 
     String getBaseUrl();
     <R> HttpEntity<String> securityHeaders(String endpoint, String method, String body);
