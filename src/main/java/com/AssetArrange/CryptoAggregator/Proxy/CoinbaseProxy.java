@@ -1,5 +1,6 @@
 package com.AssetArrange.CryptoAggregator.Proxy;
 
+import com.AssetArrange.CryptoAggregator.Constants.Constants;
 import com.AssetArrange.CryptoAggregator.Core.Signature;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -53,9 +54,7 @@ public class CoinbaseProxy implements ICoinbaseProxy {
         try {
             ResponseEntity<T> responseEntity = restTemplate.exchange(getBaseUrl() + resourcePath,
                     HttpMethod.GET,
-                    securityHeaders(resourcePath,
-                            "GET",
-                            ""),
+                    securityHeaders(resourcePath, Constants.GET, Constants.EMPTY),
                     responseType);
             return responseEntity.getBody();
         } catch (HttpClientErrorException ex) {
@@ -96,7 +95,7 @@ public class CoinbaseProxy implements ICoinbaseProxy {
         try {
             ResponseEntity<T> response = restTemplate.exchange(getBaseUrl() + resourcePath,
                     HttpMethod.DELETE,
-                    securityHeaders(resourcePath, "DELETE", ""),
+                    securityHeaders(resourcePath, Constants.DELETE, Constants.EMPTY),
                     responseType);
             return response.getBody();
         } catch (HttpClientErrorException ex) {
@@ -112,7 +111,7 @@ public class CoinbaseProxy implements ICoinbaseProxy {
         try {
             ResponseEntity<T> response = restTemplate.exchange(getBaseUrl() + resourcePath,
                     HttpMethod.POST,
-                    securityHeaders(resourcePath, "POST", jsonBody),
+                    securityHeaders(resourcePath, Constants.POST, jsonBody),
                     responseType);
             return response.getBody();
         } catch (HttpClientErrorException ex) {
@@ -130,16 +129,16 @@ public class CoinbaseProxy implements ICoinbaseProxy {
     public HttpEntity<String> securityHeaders(String endpoint, String method, String jsonBody) {
         HttpHeaders headers = new HttpHeaders();
 
-        String timestamp = Instant.now().getEpochSecond() + "";
-        String resource = endpoint.replace(getBaseUrl(), "");
+        String timestamp = Instant.now().getEpochSecond() + Constants.EMPTY;
+        String resource = endpoint.replace(getBaseUrl(), Constants.EMPTY);
 
-        headers.add("accept", "application/json");
-        headers.add("content-type", "application/json");
-        headers.add("User-Agent", "theeKevoBot");
-        headers.add("CB-ACCESS-KEY", publicKey);
-        headers.add("CB-ACCESS-SIGN", signature.generate(resource, method, jsonBody, timestamp));
-        headers.add("CB-ACCESS-TIMESTAMP", timestamp);
-        headers.add("CB-ACCESS-PASSPHRASE", passphrase);
+        headers.add(Constants.ACCEPT, Constants.APPLICATION_JSON);
+        headers.add(Constants.CONTANT_TYPE, Constants.APPLICATION_JSON);
+        headers.add(Constants.USER_AGENT, Constants.USER_AGENT_NAME);
+        headers.add(Constants.CB_ACCESS_KEY, publicKey);
+        headers.add(Constants.CB_ACCESS_SIGN, signature.generate(resource, method, jsonBody, timestamp));
+        headers.add(Constants.CB_ACCESS_TIMESTAMP, timestamp);
+        headers.add(Constants.CB_ACCESS_PASSPHRASE, passphrase);
 
         curlRequest(method, jsonBody, headers, resource);
 
