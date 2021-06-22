@@ -45,9 +45,14 @@ public class OrderService {
         return exchange.getAsList(Endpoints.ORDERS, new ParameterizedTypeReference<>() {});
     }
 
+    /* This method is causing a compiler, via build failure
+     * java: Compilation failed: internal java compiler error
+
     public List<Order> cancelAllOpenOrders() {
         return Arrays.asList(exchange.delete(Endpoints.ORDERS, new ParameterizedTypeReference<>() {}));
     }
+
+     */
 
     public List<Fill> getFillsByProductId(String product_id, int resultLimit) {
         final String uri = Endpoints.FILLS + "?product_id=" + product_id + "&limit=" + resultLimit;

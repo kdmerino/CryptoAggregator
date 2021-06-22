@@ -11,7 +11,7 @@ import lombok.Setter;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public abstract class NewOrderSingle {
+public class NewOrderSingle {
     private String client_oid;
     private String type;
     private String side;
