@@ -13,7 +13,7 @@ which makes use of DTOs to obtain the responses of the desired endpoint.
 - ```List<Hold> createOrder(NewOrderSingle order)``` : This method needs to be tested.
 
 ### TODO core:
-- [] Fix GSON dependency to obtain stringified classes for logging (i.e HTML fallback in console)
+- [x] Fix GSON dependency to obtain stringified classes for logging (i.e HTML fallback in console)
 - [] Create Beans and Autowire service classes
 - [] Move credentials to a safe location and ignore in GIT
 - [] Add unit tests?
