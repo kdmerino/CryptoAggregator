@@ -2,6 +2,7 @@ package com.AssetArrange.CryptoAggregator.Proxy;
 
 import com.AssetArrange.CryptoAggregator.Constants.Constants;
 import com.AssetArrange.CryptoAggregator.Core.Signature;
+import com.AssetArrange.CryptoAggregator.init.coinbasePro.CoinbaseProSettings;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
@@ -20,14 +21,13 @@ import java.util.List;
 
 import static java.util.Collections.emptyList;
 
-
 /**
  * This class acts as a central point for providing user configuration and making GET/POST/PUT requests as well as
  * getting responses as Lists of objects rather than arrays.
  */
 public class CoinbaseProxy implements ICoinbaseProxy {
 
-    static final Logger log = LoggerFactory.getLogger(CoinbaseProxy.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(CoinbaseProxy.class.getName());
 
     private final String publicKey;
     private final String passphrase;
@@ -36,16 +36,24 @@ public class CoinbaseProxy implements ICoinbaseProxy {
     private final ObjectMapper objectMapper;
     private final RestTemplate restTemplate;
 
-    public CoinbaseProxy(final String publicKey,
-                                final String passphrase,
-                                final String baseUrl,
-                                final Signature signature,
-                                final ObjectMapper objectMapper) {
+    public CoinbaseProxy(final CoinbaseProSettings settings) {
+        this.baseUrl = settings.getCoinbaseProBaseUrl();
+        this.passphrase = settings.getCoinbaseProPassphrase();
+        this.publicKey = settings.getCoinbaseProPublicKey();
+        this.signature = new Signature(settings.getCoinbaseProSecretKey());
+        this.objectMapper = new ObjectMapper();
+        this.restTemplate = new RestTemplate();
+    }
+
+    public CoinbaseProxy(final String baseUrl,
+                         final String publicKey,
+                         final String passphrase,
+                         final String secretKey) {
+        this.baseUrl = baseUrl;
         this.publicKey = publicKey;
         this.passphrase = passphrase;
-        this.baseUrl = baseUrl;
-        this.signature = signature;
-        this.objectMapper = objectMapper;
+        this.signature = new Signature(secretKey);
+        this.objectMapper = new ObjectMapper();
         this.restTemplate = new RestTemplate();
     }
 
