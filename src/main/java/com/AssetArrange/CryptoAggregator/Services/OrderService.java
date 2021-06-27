@@ -29,7 +29,8 @@ public class OrderService {
     }
 
     public Order getOrder(String orderId) {
-        return exchange.get(Endpoints.ORDERS_FS, new ParameterizedTypeReference<>() {});
+        final String uri = Endpoints.ORDERS_FS + orderId;
+        return exchange.get(uri, new ParameterizedTypeReference<>() {});
     }
 
     public List<Hold> createOrder(NewOrderSingle order) {

@@ -1,5 +1,6 @@
 package com.AssetArrange.CryptoAggregator.Core.dto;
 
+import com.google.gson.Gson;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -28,10 +29,9 @@ public class Order {
     String status;
     Boolean settled;
 
+    private static final Gson GSON = new Gson();
+
     public String toString() {
-        return getSide()
-                + ": " + getProduct_id()
-                + ": " + getPrice()
-                + ": " + getSize();
+        return GSON.toJson(this);
     }
 }

@@ -1,5 +1,6 @@
 package com.AssetArrange.CryptoAggregator.Core.dto;
 
+import com.google.gson.Gson;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,4 +21,10 @@ public class Account {
     private BigDecimal available;
     private BigDecimal hold;
     private String profile_id;
+
+    private static final Gson GSON = new Gson();
+
+    public String toString() {
+        return GSON.toJson(this);
+    }
 }

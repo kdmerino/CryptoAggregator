@@ -10,6 +10,7 @@ public class Constants {
     public static final String CONTANT_TYPE = "content-type";
     public static final String EMPTY = "";
     public static final String HMAC_SHA256 = "HmacSHA256";
+    public static final String MATCH = "MATCH";
     public static final String USER_AGENT = "User-Agent";
     public static final String USER_AGENT_NAME = "theekevoBot";
 
