@@ -12,7 +12,13 @@ which makes use of DTOs to obtain the responses of the desired endpoint.
 - ```List<Order> getOpenOrders()``` : This method retrieves all orders available under the authorized profile.
 - ```List<Hold> createOrder(NewOrderSingle order)``` : This method needs to be tested.
 
-### TODO: 
+### TODO core:
+- [] Fix GSON dependency to obtain stringified classes for logging (i.e HTML fallback in console)
+- [] Create Beans and Autowire service classes
+- [] Move credentials to a safe location and ignore in GIT
+- [] Add unit tests?
+
+### TODO features: 
 - [] Create a HTML view of Account, AccountHistory, and Order providing a UI view of these responses. 
 - [] Create VIEW handlers that will service HTML content.
 - [] Create an application.yml to move Proxy strings except for passPhrase which should be moved to a file NOT to be uploaded.
