@@ -2,6 +2,16 @@
 **STATUS:** This application has enabled access of Coinbase pro endpoints via the CoinbaseProxy 
 which makes use of DTOs to obtain the responses of the desired endpoint.
 
+## How to run:
+Create an untracked resource such as src/main/resources/application-main.yml with credential content:
+```
+detailscoinbasePro:
+    publicKey: ""
+    secretKey: """
+    passphrase: ""
+```
+and run application with CLI arguments: --spring.profiles.active=main
+
 ### Useful Services:
 ```AccountService```
 - ```List<Account> getAccounts()``` : This method retrieves all accounts available under the authorized profile.
@@ -14,15 +24,15 @@ which makes use of DTOs to obtain the responses of the desired endpoint.
 
 ### TODO core:
 - [x] Fix GSON dependency to obtain stringified classes for logging (i.e HTML fallback in console)
-- [] Create Beans and Autowire service classes
-- [] Move credentials to a safe location and ignore in GIT
+- [x] Create Beans and Autowire Proxy class
+- [x] Move credentials to a safe location and ignore in GIT
 - [] Add unit tests?
 
 ### TODO features: 
 - [] Create a HTML view of Account, AccountHistory, and Order providing a UI view of these responses. 
 - [] Create VIEW handlers that will service HTML content.
-- [] Create an application.yml to move Proxy strings except for passPhrase which should be moved to a file NOT to be uploaded.
+- [x] Create an application.yml to move Proxy strings except for passPhrase which should be moved to a file NOT to be uploaded.
 - [] Create a DataStore that reads CSV files to upload key historical coin data (all that are available).
 - [] Create API calls for Coin Market Cap data (free version + store retrieved data). 
 - [] Create STICH handlers that will join database data with runtime data.
-- [] Create a transaction executer (in Models) that will accept a registration of handlers to execute a chain of methods.
+- [x] Create a transaction executer (in Models) that will accept a registration of handlers to execute a chain of methods.
