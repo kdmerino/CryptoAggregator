@@ -3,7 +3,8 @@ package com.AssetArrange.CryptoAggregator.Core;
 import java.util.Arrays;
 
 public enum Transactional {
-    READ_ORDERS;
+    READ_ORDERS,
+    EXPERIMENTAL;
 
     public static Transactional fromString(final String choice) {
         return Arrays.stream(values())

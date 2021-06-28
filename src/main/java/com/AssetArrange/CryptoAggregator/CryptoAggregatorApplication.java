@@ -2,6 +2,9 @@ package com.AssetArrange.CryptoAggregator;
 
 import com.AssetArrange.CryptoAggregator.Core.Transactional;
 import com.AssetArrange.CryptoAggregator.Core.context.Context;
+import com.AssetArrange.CryptoAggregator.Core.context.IContext;
+import com.AssetArrange.CryptoAggregator.Core.context.Output;
+import com.AssetArrange.CryptoAggregator.Core.dto.Order;
 import com.AssetArrange.CryptoAggregator.Model.Runner;
 import com.AssetArrange.CryptoAggregator.Proxy.ICoinbaseProxy;
 import org.slf4j.Logger;
@@ -11,6 +14,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import javax.annotation.PostConstruct;
+import java.util.Map;
+import java.util.Optional;
 
 
 @SpringBootApplication
@@ -32,6 +37,8 @@ public class CryptoAggregatorApplication {
 		LOG.info("Launching Runner...");
 		Runner runner = new Runner(coinbaseProxy);
 		Context context = runner.run(Transactional.READ_ORDERS);
+		Output output = (Output) runner.chainRun(Transactional.EXPERIMENTAL, context.getMatchOrders());
+		Map<String, Optional<Float>> report = (Map<String, Optional<Float>>) output.getReturnValue();
 		LOG.info("Terminating Runner...");
 	}
 }

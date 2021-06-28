@@ -3,6 +3,8 @@ package com.AssetArrange.CryptoAggregator.Model;
 import com.AssetArrange.CryptoAggregator.Core.TransactionExecuter;
 import com.AssetArrange.CryptoAggregator.Core.Transactional;
 import com.AssetArrange.CryptoAggregator.Core.context.Context;
+import com.AssetArrange.CryptoAggregator.Core.context.IContext;
+import com.AssetArrange.CryptoAggregator.Core.context.Output;
 import com.AssetArrange.CryptoAggregator.Proxy.ICoinbaseProxy;
 
 public class Runner {
@@ -26,5 +28,15 @@ public class Runner {
         // Execute target program
         executer.execute(transactional, context);
         return context;
+    }
+
+    public IContext chainRun(final Transactional transactional, Object lastRun) {
+        // Chain last output to Context
+        IContext output = Output.builder()
+                .returnValue(lastRun)
+                .build();
+        // Execute target program
+        executer.execute(transactional, output);
+        return output;
     }
 }
