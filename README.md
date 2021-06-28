@@ -5,7 +5,7 @@ which makes use of DTOs to obtain the responses of the desired endpoint.
 ## How to run:
 Create an untracked resource such as src/main/resources/application-main.yml with credential content:
 ```
-detailscoinbasePro:
+coinbasePro:
     publicKey: ""
     secretKey: """
     passphrase: ""
