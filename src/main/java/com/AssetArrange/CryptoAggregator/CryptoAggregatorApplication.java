@@ -2,9 +2,7 @@ package com.AssetArrange.CryptoAggregator;
 
 import com.AssetArrange.CryptoAggregator.Core.Transactional;
 import com.AssetArrange.CryptoAggregator.Core.context.Context;
-import com.AssetArrange.CryptoAggregator.Core.context.IContext;
 import com.AssetArrange.CryptoAggregator.Core.context.Output;
-import com.AssetArrange.CryptoAggregator.Core.dto.Order;
 import com.AssetArrange.CryptoAggregator.Model.Runner;
 import com.AssetArrange.CryptoAggregator.Proxy.ICoinbaseProxy;
 import org.slf4j.Logger;
@@ -16,6 +14,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import javax.annotation.PostConstruct;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 
 @SpringBootApplication
@@ -36,9 +35,17 @@ public class CryptoAggregatorApplication {
 	public void init() {
 		LOG.info("Launching Runner...");
 		Runner runner = new Runner(coinbaseProxy);
+		Long startTime = System.nanoTime(), endTime;
 		Context context = runner.run(Transactional.READ_ORDERS);
+		endTime = System.nanoTime();
+		LOG.info("Order reading took: {}", TimeUnit.MILLISECONDS.convert(endTime - startTime, TimeUnit.NANOSECONDS));
+
+		startTime = endTime;
 		Output output = (Output) runner.chainRun(Transactional.EXPERIMENTAL, context.getMatchOrders());
-		Map<String, Optional<Float>> report = (Map<String, Optional<Float>>) output.getReturnValue();
+		endTime = System.nanoTime();
+		LOG.info("Experimental chain took: {}", TimeUnit.MILLISECONDS.convert(endTime - startTime, TimeUnit.NANOSECONDS));
+		Map<String, Double> report = (Map<String, Double>) output.getReturnValue();
+		LOG.info("net effect: {}", report.values().stream().reduce(Double::sum));
 		LOG.info("Terminating Runner...");
 	}
 }

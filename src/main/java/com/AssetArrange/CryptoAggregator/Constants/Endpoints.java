@@ -8,5 +8,8 @@ public class Endpoints {
     public static final String LEDGER = "/ledger";
     public static final String ORDERS = "/orders";
     public static final String ORDERS_FS = "/orders/";
+    public static final String PRODUCTS = "/products";
+    public static final String PRODUCTS_FS = "/products/";
+    public static final String TICKER = "/ticker";
     public static final String USER_ACCOUNT = "/users/self/trailing-volume";
 }
