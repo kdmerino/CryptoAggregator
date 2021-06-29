@@ -26,10 +26,11 @@ and run application with CLI arguments: --spring.profiles.active=main
 - [x] Fix GSON dependency to obtain stringified classes for logging (i.e HTML fallback in console)
 - [x] Create Beans and Autowire Proxy class
 - [x] Move credentials to a safe location and ignore in GIT
-- [] Add unit tests?
+- [] Add unit tests
+- [] Modifiy application.yml to support changing HTTP port.
 
 ### TODO features: 
-- [] Create a HTML view of Account, AccountHistory, and Order providing a UI view of these responses. 
+- [] Investigate HTML/CSS/JS frameworks that best work with springboot.
 - [] Create VIEW handlers that will service HTML content.
 - [x] Create an application.yml to move Proxy strings except for passPhrase which should be moved to a file NOT to be uploaded.
 - [] Create a DataStore that reads CSV files to upload key historical coin data (all that are available).
