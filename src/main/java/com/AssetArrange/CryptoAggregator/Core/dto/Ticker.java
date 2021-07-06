@@ -12,7 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Ticker {
-    private Integer id;
+    private Integer trade_id;
     private String price;
     private String size;
     private String bid;

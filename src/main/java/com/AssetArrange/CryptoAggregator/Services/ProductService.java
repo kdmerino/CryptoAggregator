@@ -15,8 +15,8 @@ public class ProductService {
         this.proxy = proxy;
     }
 
-    public List<Ticker> getTickers(final String productId) {
+    public Ticker getTickers(final String productId) {
         final String uri = Endpoints.PRODUCTS_FS + productId + Endpoints.TICKER;
-        return proxy.getAsList(uri, new ParameterizedTypeReference<>() {});
+        return proxy.get(uri, new ParameterizedTypeReference<>() {});
     }
 }
